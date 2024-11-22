@@ -62,10 +62,10 @@ func main() {
 	defer worker.Close()
 
 	// Préparation de LogMiner
-	// err = worker.PrepareLogMiner()
-	// if err != nil {
-	// 	log.Fatalf("Erreur lors de la préparation de LogMiner : %v", err)
-	// }
+	err = worker.PrepareLogMiner()
+	if err != nil {
+		log.Fatalf("Erreur lors de la préparation de LogMiner : %v", err)
+	}
 
 	// Initialisation de la table LOGMINER_STATE
 	err = worker.InitLogMinerStateTable()

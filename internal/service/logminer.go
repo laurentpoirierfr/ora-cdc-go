@@ -234,18 +234,26 @@ func (w *LogMinerWorker) InitLogMinerStateTable() error {
 // PrepareLogMiner prépare LogMiner dans Oracle (ajoute les redo logs et démarre LogMiner)
 func (w *LogMinerWorker) PrepareLogMiner() error {
 	// Étape 1 : Ajouter les fichiers redo logs
+	// addRedoLogsQuery := `
+	//     BEGIN
+	//         FOR redo_file IN (
+	//             SELECT name FROM v$logfile
+	//         ) LOOP
+	//             DBMS_LOGMNR.ADD_LOGFILE(
+	//                 logfile_name => redo_file.name,
+	//                 options      => DBMS_LOGMNR.NEW
+	//             );
+	//         END LOOP;
+	//     END;
+	// `
+
 	addRedoLogsQuery := `
-        BEGIN
-            FOR redo_file IN (
-                SELECT name FROM v$logfile
-            ) LOOP
-                DBMS_LOGMNR.ADD_LOGFILE(
-                    logfile_name => redo_file.name,
-                    options      => DBMS_LOGMNR.NEW
-                );
-            END LOOP;
-        END;
-    `
+		BEGIN
+			DBMS_LOGMNR.BUILD(
+				option => DBMS_LOGMNR.STORE_IN_REDO_LOGS
+			);
+		END;
+	`
 	_, err := w.db.Exec(addRedoLogsQuery)
 	if err != nil {
 		return fmt.Errorf("erreur lors de l'ajout des redo logs : %v", err)

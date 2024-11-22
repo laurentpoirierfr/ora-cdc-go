@@ -20,3 +20,12 @@ services:
     # Forward Oracle port
     ports:
       - 1521:1521
+
+  visulate-ora2pg:
+    container_name: visulate-ora2pg 
+    image: visulate/visulate-ora2pg:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - ./ora2pg-projects:/project
+         
