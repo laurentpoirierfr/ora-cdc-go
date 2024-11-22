@@ -91,5 +91,6 @@ services:
 networks:
   redpanda_network:
     driver: bridge
+    
 volumes:
   redpanda: null
