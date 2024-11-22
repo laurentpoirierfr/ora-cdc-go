@@ -1,8 +1,10 @@
 # ora-cdc-go
 
+
+## Demonstration
+
 ```bash
-docker compose up
-open http://localhost:3000
+make demo
 ```
 
 ## References
