@@ -9,6 +9,7 @@ type LogMinerConfig struct {
 	Callback           func(row LogMinerRow)
 }
 
+// Struct de la view LogMiner Oracle
 type LogMinerRow struct {
 	SCN       int64     `json:"scn"`
 	Timestamp time.Time `json:"timestamp"`
