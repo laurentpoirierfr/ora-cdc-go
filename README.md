@@ -1,5 +1,6 @@
 # ora-cdc-go
 
+![cdc pattern](./assets/cdc-pattern.png)
 
 ## Demonstration
 
