@@ -39,7 +39,14 @@ GRANT CREATE SESSION TO cdc_user;
 * https://www.atlassian.com/data/admin/how-to-create-a-user-and-grant-permissions-in-oracle
 
 
-### Visulate Ora2Pg - demo
+## Visulate Ora2Pg - demo
+
+### Migration schéma
+
+```bash
+open http://localhost:3000
+```
+
 
 ```yaml
 oracle_dsn : dbi:Oracle:host=oracle;service_name=FREEPDB1;port=1521
