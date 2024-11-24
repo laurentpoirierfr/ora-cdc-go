@@ -43,11 +43,15 @@ func main() {
 			User:     "demo",
 			Password: "demo",
 		},
+		{
+			User:     "cdc_user",
+			Password: "password",
+		},
 	}
 
 	dbServices := []string{"FREE", "FREEPDB1"}
 
-	dsn := fmt.Sprintf("oracle://%s:%s@%s:%s/%s", accounts[1].User, accounts[1].Password, "localhost", "1521", dbServices[1])
+	dsn := fmt.Sprintf("oracle://%s:%s@%s:%s/%s", accounts[2].User, accounts[2].Password, "localhost", "1521", dbServices[0])
 
 	config := model.LogMinerConfig{
 		DBConnectionString: dsn,

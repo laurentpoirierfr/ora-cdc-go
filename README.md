@@ -39,6 +39,11 @@ GRANT CONNECT, RESOURCE, DBA, EXECUTE_CATALOG_ROLE TO cdc_user;
 GRANT UNLIMITED TABLESPACE TO cdc_user;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON schema.demo TO cdc_user;
+
+GRANT SELECT ANY TRANSACTION TO cdc_user;
+GRANT LOGMINING TO cdc_user;
+GRANT CREATE SESSION TO cdc_user;
+
 ```
 
 * https://www.atlassian.com/data/admin/how-to-create-a-user-and-grant-permissions-in-oracle
