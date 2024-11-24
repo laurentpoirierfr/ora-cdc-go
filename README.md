@@ -29,9 +29,6 @@ Dans le container docker oracle, création d'un user **cdc_user**.
 ```bash
 sh-4.4$ sqlplus "/ as sysdba"
 
-select username from all_users;
-SELECT username FROM dba_users;
-
 # New user
 CREATE USER cdc_user IDENTIFIED BY password;
 
