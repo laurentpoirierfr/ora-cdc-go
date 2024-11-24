@@ -2,13 +2,11 @@
 
 ![cdc pattern](./assets/cdc-pattern.png)
 
-## Demonstration
+## Demonstration
 
 ```bash
 make demo
 ```
-
-
 
 ## Administration Oracle
 
