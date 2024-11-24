@@ -1,0 +1,7 @@
+server:
+  port: "${PORT:8080}"
+
+application:
+  name: "ora-cdc-go"
+  description: "Service Starter Go"
+  version: "0.1.0"

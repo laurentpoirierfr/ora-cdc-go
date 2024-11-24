@@ -1,0 +1,103 @@
+basePath: /
+definitions:
+  models.Health:
+    properties:
+      status:
+        type: string
+    type: object
+  models.Info:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      version:
+        type: string
+    type: object
+host: homezone.swagger.io:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a bff server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: ms-app
+  version: 0.1.0
+paths:
+  /api/demo:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Health'
+      summary: Get demo
+      tags:
+      - api
+  /ops/info:
+    get:
+      consumes:
+      - application/json
+      description: Informations sur le service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Info'
+      summary: Info
+      tags:
+      - ops
+  /ops/liveness:
+    get:
+      consumes:
+      - application/json
+      description: Informations sur le service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Health'
+      summary: liveness
+      tags:
+      - ops
+  /ops/metrics:
+    get:
+      consumes:
+      - application/json
+      description: Informations sur le service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Metrics prometheus
+      tags:
+      - ops
+  /ops/readiness:
+    get:
+      consumes:
+      - application/json
+      description: Informations sur le service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Health'
+      summary: Readiness
+      tags:
+      - ops
+swagger: "2.0"

@@ -70,3 +70,9 @@ password   : password
 
 * https://mathiaszarick.wordpress.com/2024/05/24/oracle-to-postgresql-replication-using-debezium-and-platys/
 * https://github.com/TrivadisPF/platys/tree/master
+
+## Golang
+
+```bash
+go install github.com/swaggo/swag/cmd/swag@latest
+```

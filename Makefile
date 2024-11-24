@@ -5,3 +5,6 @@ demo:
 
 test:
 	go test ./...
+
+api-docs:
+	swag init -g cmd/server/main.go -o api
