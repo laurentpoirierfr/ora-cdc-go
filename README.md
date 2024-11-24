@@ -44,15 +44,30 @@ desc v$logfile;
 select * from v$logfile;
 select * from V$LOG_HISTORY;
 
+# Sequence de la préparation du logminer
+SHUTDOWN IMMEDIATE
+STARTUP MOUNT
+
+ALTER DATABASE ARCHIVELOG;
+ALTER DATABASE OPEN;
+ARCHIVE LOG LIST
 ALTER PLUGGABLE DATABASE ALL OPEN;
 ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;
 
 
-DBMS_LOGMNR_D.build ( dictionary_filename => 'FREE-dict.ora', dictionary_location => '/opt/oracle/oradata/FREE'); 
+# Sequence d'initialisation du logminer
+SELECT * FROM v$logfile;
 
-DBMS_LOGMNR.start_logmnr ( dictfilename => '/opt/oracle/oradata/FREE/FREE-dict.ora' );
+EXECUTE DBMS_LOGMNR_D.BUILD(OPTIONS=> DBMS_LOGMNR_D.STORE_IN_REDO_LOGS);
 
+EXECUTE DBMS_LOGMNR.ADD_LOGFILE( LOGFILENAME => '/opt/oracle/oradata/FREE/redo01.log', OPTIONS => DBMS_LOGMNR.NEW);
+EXECUTE DBMS_LOGMNR.ADD_LOGFILE( LOGFILENAME => '/opt/oracle/oradata/FREE/redo02.log', OPTIONS => DBMS_LOGMNR.NEW);
 
+EXECUTE DBMS_LOGMNR.START_LOGMNR(OPTIONS => DBMS_LOGMNR.DICT_FROM_ONLINE_CATALOG);
+
+SELECT distinct object_name FROM dba_objects where object_name like 'V$%LOGMNR%' or object_name like 'CDB%LOGMNR%' order by 1;
+
+select SEG_OWNER, OPERATION, COUNT(*) from V$LOGMNR_CONTENTS;
 ```
 
 ## References
@@ -62,6 +77,10 @@ DBMS_LOGMNR.start_logmnr ( dictfilename => '/opt/oracle/oradata/FREE/FREE-dict.o
 * https://oracle-base.com/articles/8i/logminer
 * https://docs.oracle.com/en/database/oracle/oracle-database/18/sutil/oracle-logminer-utility.html
 * https://mbouayoun.developpez.com/journaux/
+
+
+* https://dbaoraclesql.canalblog.com/archives/2021/06/03/38999757.html
+
 
 * https://mathiaszarick.wordpress.com/2024/05/24/oracle-to-postgresql-replication-using-debezium-and-platys/
 * https://github.com/TrivadisPF/platys/tree/master
