@@ -19,6 +19,30 @@ password   : demo
 
 Dans le container docker oracle 
 
+*Notes* : 
+
+ - You must have the **EXECUTE_CATALOG_ROLE** role to use the **DBMS_LOGMNR_D** package.
+ - You must have the **EXECUTE_CATALOG_ROLE** role to use the **DBMS_LOGMNR** package.
+ 
+* https://docs.oracle.com/en/database/oracle/oracle-database/23/arpls/DBMS_LOGMNR.html#GUID-41730EFC-C6CA-423E-834B-3E0E643346C3
+
+```bash
+sh-4.4$ sqlplus "/ as sysdba"
+
+select username from all_users;
+SELECT username FROM dba_users;
+
+# New user
+CREATE USER cdc_user IDENTIFIED BY password;
+
+GRANT CONNECT, RESOURCE, DBA, EXECUTE_CATALOG_ROLE TO cdc_user;
+GRANT UNLIMITED TABLESPACE TO cdc_user;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON schema.demo TO cdc_user;
+```
+
+* https://www.atlassian.com/data/admin/how-to-create-a-user-and-grant-permissions-in-oracle
+
 ```bash
 sh-4.4$ sqlplus "/ as sysdba"
 
@@ -44,7 +68,7 @@ desc v$logfile;
 select * from v$logfile;
 select * from V$LOG_HISTORY;
 
-# Sequence de la préparation du logminer
+# Sequence de la préparation du logminer / system admin
 SHUTDOWN IMMEDIATE
 STARTUP MOUNT
 
@@ -55,7 +79,7 @@ ALTER PLUGGABLE DATABASE ALL OPEN;
 ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;
 
 
-# Sequence d'initialisation du logminer
+# Sequence d'initialisation du logminer / user session
 SELECT * FROM v$logfile;
 
 EXECUTE DBMS_LOGMNR_D.BUILD(OPTIONS=> DBMS_LOGMNR_D.STORE_IN_REDO_LOGS);
@@ -67,7 +91,10 @@ EXECUTE DBMS_LOGMNR.START_LOGMNR(OPTIONS => DBMS_LOGMNR.DICT_FROM_ONLINE_CATALOG
 
 SELECT distinct object_name FROM dba_objects where object_name like 'V$%LOGMNR%' or object_name like 'CDB%LOGMNR%' order by 1;
 
-select SEG_OWNER, OPERATION, COUNT(*) from V$LOGMNR_CONTENTS;
+select * from V$LOGMNR_CONTENTS;
+
+# fin de session logminer
+EXECUTE DBMS_LOGMNR.END_LOGMNR;
 ```
 
 ## References
