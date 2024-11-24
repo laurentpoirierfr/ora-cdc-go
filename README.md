@@ -7,13 +7,7 @@
 make demo
 ```
 
-### Visulate Ora2Pg - demo
 
-```yaml
-oracle_dsn : dbi:Oracle:host=oracle;service_name=FREEPDB1;port=1521
-user       : demo
-password   : demo
-```
 
 ## Administration Oracle
 
@@ -45,6 +39,14 @@ GRANT CREATE SESSION TO cdc_user;
 
 * https://www.atlassian.com/data/admin/how-to-create-a-user-and-grant-permissions-in-oracle
 
+
+### Visulate Ora2Pg - demo
+
+```yaml
+oracle_dsn : dbi:Oracle:host=oracle;service_name=FREEPDB1;port=1521
+user       : cdc_user
+password   : password
+```
 
 ## References
 
